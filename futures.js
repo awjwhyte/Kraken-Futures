@@ -29,16 +29,6 @@ let action = endpoint === 'tickers' ? axios.get(process.env.URL + endpoint) : ax
   }
 }
 
-// const method = (endpoint) => {
-//   let array = ['accounts', 'openorders', 'recentorders', 'historicorders']
-//   for (let data of array) {
-//     if (endpoint === data) {
-//       return 'axios.get'
-//     } else {
-//       return 'axios.post'
-//     }
-//   }
-// }
 
 const privateMethod = async (endpoint, params=undefined) => {
   let headers = {
@@ -55,9 +45,6 @@ const privateMethod = async (endpoint, params=undefined) => {
     console.log(e)
   }
 }
-
-
-
 
 module.exports = {
   publicMethod,
