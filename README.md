@@ -24,8 +24,7 @@ PRIVATE_KEY= *** your API secret ***
 
 URL=https://futures.kraken.com/derivatives/api/v3/
 ****************************************************************************
-
-for more information or to suggest upgrades, kindly contact me at whyte.jnr@gmail.com
+For more information or to suggest upgrades, kindly contact me at whyte.jnr@gmail.com
 
 If you liked this library, kindly consider making a donation to support my work
 
