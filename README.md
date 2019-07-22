@@ -14,7 +14,7 @@ privateMethod('accounts') // This will give you a snapshot of your accounts
 
 privateMethod('recentorders', {symbol: 'PI_ETHUSD'}) // this will return your recent PI_ETHUSD orders
 ******************************************************************************
-Please note that before you can start using this library, you will have to create a file in the root of the project and save it at .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
+Please note that before you can start using this library, you will have to create a file in the root of the project and save it as .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
 
 Please place the following in your .env file.
 
