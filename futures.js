@@ -29,29 +29,28 @@ let action = endpoint === 'tickers' ? axios.get(process.env.URL + endpoint) : ax
   }
 }
 
-const method = (endpoint) => {
-  let array = ['accounts', 'openorders', 'recentorders', 'historicorders']
-  for (let data of array) {
-    if (endpoint === data) {
-      return 'axios.get'
-    } else {
-      return 'axios.post'
-    }
-  }
-}
+// const method = (endpoint) => {
+//   let array = ['accounts', 'openorders', 'recentorders', 'historicorders']
+//   for (let data of array) {
+//     if (endpoint === data) {
+//       return 'axios.get'
+//     } else {
+//       return 'axios.post'
+//     }
+//   }
+// }
 
 const privateMethod = async (endpoint, params=undefined) => {
+  let headers = {
+    'APIKey': process.env.PUBLIC_KEY,
+    'Nonce': nonce,
+    'Authent': messageSignature(endpoint, params)
+  }
   let data = params != undefined ? `${process.env.URL}${endpoint}?${queryString.stringify(params)}` : `${process.env.URL}${endpoint}${queryString.stringify(params)}`
+  let method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers})
   try {
-    let result = await method(endpoint)(data,
-        {
-          headers: {
-            'APIKey': process.env.PUBLIC_KEY,
-            'Nonce': nonce,
-            'Authent': messageSignature(endpoint, params)
-          }
-        })
-        console.log(result.data)
+    method
+    console.log(method.data.accounts)
   } catch (e) {
     console.log(e)
   }
