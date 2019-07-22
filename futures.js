@@ -40,7 +40,7 @@ const privateMethod = async (endpoint, params=undefined) => {
   let method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers})
   try {
     method
-    console.log(method.data.accounts)
+    console.log(method.data)
   } catch (e) {
     console.log(e)
   }
