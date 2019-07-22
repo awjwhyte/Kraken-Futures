@@ -18,8 +18,8 @@ for more information or to suggest upgrades, kindly contact me at whyte.jnr@gmai
 
 If you liked this library, kindly consider making a donation to support my work
 
-BTC:
-ETH:
-LTC:
+BTC: bc1q2pmvxmlys2jv9jn0tlh24zge9wydvd4sx8z9ej
+ETH: 0x04D4E07dbf3ddcd5f628CE43fa6b14e1d1BfFaC7
+XRP: rnD1frcKj4r1yBA7ZPSMdBi9iM816qn9Km
 
 Thank you for your support!
