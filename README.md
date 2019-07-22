@@ -13,6 +13,15 @@ publicMethod('tickers') // This will return all the tickers and their prices
 privateMethod('accounts') // This will give you a snapshot of your accounts
 
 privateMethod('recentorders', {symbol: 'PI_ETHUSD'}) // this will return your recent PI_ETHUSD orders
+******************************************************************************
+Please note that before you can start using this library, you will have to create a file in the root of the project and save it at .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
+
+Please place the following in your .env file.
+
+PUBLIC_KEY= *** your API KEY ***
+PRIVATE_KEY= *** your API secret ***
+URL=https://futures.kraken.com/derivatives/api/v3/
+****************************************************************************
 
 for more information or to suggest upgrades, kindly contact me at whyte.jnr@gmail.com
 
