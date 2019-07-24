@@ -1,18 +1,25 @@
 This library allows you to access the Kraken futures API
 
-There are two main methods, publicMethod and privateMethod. The publicMethod is for making public calls
+There is a Futures class in the main.js file which contains two main methods,
+
+publicMethod and privateMethod. The publicMethod is for making public calls
 
 whiles the privateMethod is for making private calls
 
 The client is used as follows;
 
-in the index.js file of this project, you can place a method call with the proper arguments e.g.
+in the index.js file of this project, you can create a new instance of the Futures class,
+and place method call with the proper arguments e.g.
 
-publicMethod('tickers') // This will return all the tickers and their prices
+const methods = new Futures(); // create instance of Futures class
 
-privateMethod('accounts') // This will give you a snapshot of your accounts
+// make a public call
+methods.publicMethod('tickers') // This will return all the tickers and their prices
 
-privateMethod('recentorders', {symbol: 'PI_ETHUSD'}) // this will return your recent PI_ETHUSD orders
+//make a private call
+methods.privateMethod('accounts') // This will give you a snapshot of your accounts
+
+methods.privateMethod('recentorders', {symbol: 'PI_ETHUSD'}) // this will return your recent PI_ETHUSD orders
 ******************************************************************************
 Please note that before you can start using this library, you will have to create a file in the root of the project and save it as .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
 
