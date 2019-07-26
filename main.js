@@ -1,7 +1,16 @@
 const axios = require('axios')
 const crypto = require('crypto')
-const queryString = require('query-string')
 require('dotenv').config()
+
+const serialize = (obj)=> {
+  var str = [];
+  for (var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
+
 
 class Futures {
   constructor() {
@@ -13,17 +22,18 @@ class Futures {
    // create authentication
     messageSignature (endpoint, postData=undefined) {
       let endpointPath = `/api/v3/${endpoint}`
-      let message = postData == undefined ? `${this.nonce}${endpointPath}` : `${queryString.stringify(postData)}${this.nonce}${ endpointPath}`
+      let message = postData == undefined ? `${this.nonce}${endpointPath}` : `${serialize(postData)}${this.nonce}${endpointPath}`
       let firstHash = crypto.createHash('sha256').update(message).digest()
       let base64decode = Buffer.from(this.API_SECRET, 'base64')
       let hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest()
       let finalHash = Buffer.from(hash).toString('base64');
 
       return finalHash
+      // console.log(message)
   }
   // make a public call
    async publicMethod (endpoint, params=undefined) {
-    let action = endpoint === 'tickers' ? axios.get(this.URL + endpoint) : axios.get(this.URL + endpoint + '?' + queryString.stringify(params))
+    let action = endpoint === 'tickers' ? axios.get(this.URL + endpoint) : axios.get(this.URL + endpoint + '?' + serialize(params))
       try {
         let call = await action
         let results = endpoint === 'orderbook' ? call.data['orderBook'] : call.data[endpoint]
@@ -40,7 +50,7 @@ class Futures {
       'Nonce': this.nonce,
       'Authent': this.messageSignature(endpoint, params)
     }
-    let data = params != undefined ? `${this.URL}${endpoint}?${queryString.stringify(params)}` : `${this.URL}${endpoint}${queryString.stringify(params)}`
+    let data = params != undefined ? `${this.URL}${endpoint}?${serialize(params)}` : `${this.URL}${endpoint}${serialize(params)}`
     let method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers})
     try {
       method

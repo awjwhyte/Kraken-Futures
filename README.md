@@ -4,12 +4,12 @@ There is a Futures class in the main.js file which contains two main methods,
 
 publicMethod and privateMethod. The publicMethod is for making public calls
 
-whiles the privateMethod is for making private calls
+while the privateMethod is for making private calls
 
 The client is used as follows;
 
 in the index.js file of this project, you can create a new instance of the Futures class,
-and place method call with the proper arguments e.g.
+and place a method call with the proper arguments e.g.
 
 const methods = new Futures(); // create instance of Futures class
 

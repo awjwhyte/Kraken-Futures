@@ -4,17 +4,22 @@ const methods = new Futures()
 //
 // methods.privateMethod('accounts')
 
-params = {
+let params = {
   orderType: 'lmt',
-  symbol: 'pi_ethusd',
+  symbol: 'pi_xbtusd',
   side: 'sell',
-  size: 200.0,
-  limitPrice: 1000.00,
+  size: 50,
+  limitPrice: 30000
 }
+
+
 // publicMethod('tickers')
-// methods.privateMethod('accounts')
+
+methods.privateMethod('accounts')
 // methods.privateMethod('recentorders', {symbol: 'PI_ETHUSD'})
 // methods.publicMethod('history', {symbol: 'PI_ETHUSD', lastTime: '2019-07-24T19:07:04.591Z'})
-methods.privateMethod('sendorder', params)
-// methods.privateMethod('cancelorder', {order_id: 'b8d31f89-bef7-4314-b9a9-62a8becb97eb'})
+// methods.privateMethod('sendorder', params)
+// methods.privateMethod('cancelorder', {order_id: 'b4cc6501-db03-45c4-b86b-a3162ff277e8'})
 // methods.privateMethod('openorders')
+
+// console.log(params[0])
