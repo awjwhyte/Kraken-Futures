@@ -25,9 +25,9 @@ Please note that before you can start using this library, you will have to creat
 
 Please place the following in your .env file.
 
-PUBLIC_KEY= *** your API KEY ***
+API_KEY= *** your API KEY ***
 
-PRIVATE_KEY= *** your API secret ***
+API_SECRET= *** your API secret ***
 
 URL=https://futures.kraken.com/derivatives/api/v3/
 ****************************************************************************

@@ -1,6 +1,6 @@
-const axios = require('axios')
-const crypto = require('crypto')
-require('dotenv').config()
+const axios = require('axios');
+const crypto = require('crypto');
+require('dotenv').config();
 
 const serialize = (obj)=> {
   var str = [];
@@ -9,7 +9,7 @@ const serialize = (obj)=> {
       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
   return str.join("&");
-}
+};
 
 
 class Futures {
@@ -27,19 +27,17 @@ class Futures {
       let base64decode = Buffer.from(this.API_SECRET, 'base64')
       let hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest()
       let finalHash = Buffer.from(hash).toString('base64');
-
       return finalHash
-      // console.log(message)
   }
   // make a public call
    async publicMethod (endpoint, params=undefined) {
-    let action = endpoint === 'tickers' ? axios.get(this.URL + endpoint) : axios.get(this.URL + endpoint + '?' + serialize(params))
+    let action = endpoint === 'tickers' ? axios.get(`${this.URL}/${endpoint}`) : axios.get(`${this.URL}/${endpoint}?${serialize(params)}`)
       try {
         let call = await action
         let results = endpoint === 'orderbook' ? call.data['orderBook'] : call.data[endpoint]
-        console.log(results)
+        return results;
       } catch (e) {
-        console.log(e)
+        return e;
       }
   }
 
@@ -53,10 +51,9 @@ class Futures {
     let data = params != undefined ? `${this.URL}${endpoint}?${serialize(params)}` : `${this.URL}${endpoint}${serialize(params)}`
     let method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers})
     try {
-      method
-      console.log(method.data)
+      return method;
     } catch (e) {
-      console.log(e)
+      return e;
     }
   }
 }
