@@ -14,20 +14,20 @@ const serialize = (obj)=> {
 
 class Futures {
   constructor() {
-    this.API_KEY = process.env.PUBLIC_KEY
-    this.API_SECRET = process.env.PRIVATE_KEY
-    this.URL = process.env.URL
-    this.nonce = new Date().getTime() * 1000
+    this.API_KEY = process.env.API_KEY;
+    this.API_SECRET = process.env.API_SECRET;
+    this.URL = process.env.URL;
+    this.nonce = new Date().getTime() * 1000;
   }
    // create authentication
     messageSignature (endpoint, postData=undefined) {
       let endpointPath = `/api/v3/${endpoint}`
       let message = postData == undefined ? `${this.nonce}${endpointPath}` : `${serialize(postData)}${this.nonce}${endpointPath}`
-      let firstHash = crypto.createHash('sha256').update(message).digest()
-      let base64decode = Buffer.from(this.API_SECRET, 'base64')
-      let hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest()
+      let firstHash = crypto.createHash('sha256').update(message).digest();
+      let base64decode = Buffer.from(this.API_SECRET, 'base64');
+      let hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest();
       let finalHash = Buffer.from(hash).toString('base64');
-      return finalHash
+      return finalHash;
   }
   // make a public call
    async publicMethod (endpoint, params=undefined) {
@@ -43,15 +43,16 @@ class Futures {
 
   // make a private call
    async privateMethod (endpoint, params=undefined) {
-    let headers = {
+    const headers = {
       'APIKey': this.API_KEY,
       'Nonce': this.nonce,
       'Authent': this.messageSignature(endpoint, params)
     }
-    let data = params != undefined ? `${this.URL}${endpoint}?${serialize(params)}` : `${this.URL}${endpoint}${serialize(params)}`
-    let method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers})
+    const data = params != undefined ? `${this.URL}/${endpoint}?${serialize(params)}` : `${this.URL}/${endpoint}`
+    
     try {
-      return method;
+      const method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers});
+       return method;
     } catch (e) {
       return e;
     }

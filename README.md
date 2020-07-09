@@ -8,18 +8,29 @@ while the privateMethod is for making private calls
 
 The client is used as follows;
 
-in the index.js file of this project, you can create a new instance of the Futures class,
-and place a method call with the proper arguments e.g.
+in the index.js file of this project, there are two functions; clientPublic and clientPrivate
+they make public and private calls respectively. If you're very comfortable with Node JS, you can understand the code and make modifications easily but if not, use the functions in the index file to make either public or private calls respectively.
 
-const methods = new Futures(); // create instance of Futures class
 
 // make a public call
-methods.publicMethod('tickers') // This will return all the tickers and their prices
+const clientPublic = async () => {
+  const x = await bot.privateMethod('tickers');
+  console.log(x);
+};
+
+clientPublic(); // place a call to retrieve ticker prices
 
 //make a private call
-methods.privateMethod('accounts') // This will give you a snapshot of your accounts
+const clientPrivate = async () => {
 
-methods.privateMethod('recentorders', {symbol: 'PI_ETHUSD'}) // this will return your recent PI_ETHUSD orders
+  const x = await bot.privateMethod('accounts');
+  console.log(x.data);
+};
+
+clientPrivate(); // place a call to retrieve account snapshot 
+
+// replace 'accounts' with other private methods and include other parameters as needed.
+
 ******************************************************************************
 Please note that before you can start using this library, you will have to create a file in the root of the project and save it as .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
 

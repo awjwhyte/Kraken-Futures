@@ -24,10 +24,15 @@ let params = {
 
 // console.log(params[0])
 
-const client = async () => {
+// const clientPrivate = async () => {
 
+//   const x = await bot.privateMethod('accounts');
+//   console.log(x.data);
+// };
+
+const clientPublic = async () => {
   const x = await bot.publicMethod('tickers');
   console.log(x);
-}
+};
 
-client();
+clientPublic();
