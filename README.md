@@ -13,25 +13,21 @@ they make public and private calls respectively. If you're very comfortable with
 
 
 // make a public call
-const clientPublic = async () => {
-  const x = await bot.privateMethod('tickers');
+const client = async () => {
+  const x = await bot.publicMethod('tickers');
   console.log(x);
 };
 
 clientPublic(); // place a call to retrieve ticker prices
 
 //make a private call
-const clientPrivate = async () => {
-
+just swap the publicMethod to a private method and use any of the private endpoints e.g.
+const client = async () => {
   const x = await bot.privateMethod('accounts');
-  console.log(x.data);
+  console.log(x);
 };
 
-clientPrivate(); // place a call to retrieve account snapshot 
-
-// replace 'accounts' with other private methods and include other parameters as needed.
-
-******************************************************************************
+*******************************************************************************************
 Please note that before you can start using this library, you will have to create a file in the root of the project and save it as .env. In this .env file you will place the API PUBLIC_KEY, API PRIVATE_KEY and the base URL.
 
 Please place the following in your .env file.

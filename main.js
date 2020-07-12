@@ -5,7 +5,7 @@ require('dotenv').config();
 const serialize = (obj)=> {
   var str = [];
   for (var p in obj)
-    if (obj.hasOwnProperty(p)) {
+    if (obj.hasOwnProperty(p)) { 
       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
   return str.join("&");
@@ -19,26 +19,28 @@ class Futures {
     this.URL = process.env.URL;
     this.nonce = new Date().getTime() * 1000;
   }
-   // create authentication
-    messageSignature (endpoint, postData=undefined) {
-      let endpointPath = `/api/v3/${endpoint}`
-      let message = postData == undefined ? `${this.nonce}${endpointPath}` : `${serialize(postData)}${this.nonce}${endpointPath}`
-      let firstHash = crypto.createHash('sha256').update(message).digest();
-      let base64decode = Buffer.from(this.API_SECRET, 'base64');
-      let hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest();
-      let finalHash = Buffer.from(hash).toString('base64');
-      return finalHash;
-  }
+
   // make a public call
-   async publicMethod (endpoint, params=undefined) {
-    let action = endpoint === 'tickers' ? axios.get(`${this.URL}/${endpoint}`) : axios.get(`${this.URL}/${endpoint}?${serialize(params)}`)
+  async publicMethod (endpoint, params=undefined) {
+    
       try {
-        let call = await action
-        let results = endpoint === 'orderbook' ? call.data['orderBook'] : call.data[endpoint]
+        const action = endpoint === 'tickers' ? await axios.get(`${this.URL}/${endpoint}`) : await axios.get(`${this.URL}/${endpoint}?${serialize(params)}`)
+        const results = endpoint === 'orderbook' ? action.data['orderBook'] : action.data[endpoint]
         return results;
       } catch (e) {
         return e;
       }
+  }
+
+   // create authentication
+    messageSignature (endpoint, postData=undefined) {
+      const endpointPath = `/api/v3/${endpoint}`
+      const message = postData == undefined ? `${this.nonce}${endpointPath}` : `${serialize(postData)}${this.nonce}${endpointPath}`
+      const firstHash = crypto.createHash('sha256').update(message).digest();
+      const base64decode = Buffer.from(this.API_SECRET, 'base64');
+      const hash = crypto.createHmac('sha512', base64decode).update(firstHash).digest();
+      const finalHash = Buffer.from(hash).toString('base64');
+      return finalHash;
   }
 
   // make a private call
@@ -51,8 +53,8 @@ class Futures {
     const data = params != undefined ? `${this.URL}/${endpoint}?${serialize(params)}` : `${this.URL}/${endpoint}`
     
     try {
-      const method = endpoint === 'account' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers});
-       return method;
+      const method = endpoint === 'accounts' || 'openorders' || 'recentorders' || 'historicorders' ? await axios.get(data, {headers}) : await axios.post(data, {headers});
+       return method.data;
     } catch (e) {
       return e;
     }
